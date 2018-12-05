@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/CHUpload.css">
+    <script src="./uploadES6-1.0.js"></script>
+    <title>Document</title>
+    <style>
+        #imgList {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="imgList">
+
+    </div>
+    <div id="imgList1">
+
+    </div>
+    <button onclick="submit()">提交</button>
+</body>
+<script>
+    var initUpload;
+    window.onload = function () {
+        var data = {
+            autoUpload: true,
+            selectMore: true,
+            url: 'http://127.0.0.1:7001/uploadImg',
+            maxSize: 1,
+            formData: {
+                'userId': 0,
+                'uploadType': 0
+            }
+        }
+        initUpload = new CHUpload(data);
+        initUpload1 = new CHUpload({
+            url: 'http://192.168.1.97:8885/User/UploadFile',
+            boxId: "imgList1",
+            bgText: "上传背景图"
+        });
+        initUpload.selectImgEvent = function (val) {
+            if (val) {
+                set_upload_param(initUpload, initUpload.file[0].name, false);
+            }
+        }
+        initUpload.deleteImgEvent = function () {
+            console.log(initUpload.currentSize);
+        }
+        initUpload.uploadCompleteEvent = function (datalist, data) {
+            console.log(data);
+        }
+
+
+    }
+
+    function submit() {
+        console.log(initUpload.fileSrc);
+    }
+
+    function uploadFile() {
+        initUpload.uploadFile(
+            function (data) {
+                console.log(data);
+            }
+        );
+    }</script>
+
+</html>
